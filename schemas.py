@@ -14,7 +14,7 @@ class StudentResponse(StudentBase):
 
 class EnrollmentBase(BaseModel):
     student_id: int
-    subject_name: SyntaxWarning
+    subject_name: str
 
 class EnrollmentCreate(EnrollmentBase):
     pass

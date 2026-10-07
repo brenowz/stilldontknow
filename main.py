@@ -16,3 +16,23 @@ def get_db():
         yield db
     finally:
         db.close()
+
+@app.post('/students/',
+              response_model=schemas.StudentResponse)
+def create_student(
+    student: schemas.StudentCreate, 
+    db: Session = Depends(get_db)):
+
+    db_student = models.Student(**student.model_dump())
+    db.add(db_student)
+    db.commit()
+    db.refresh(db_student)
+    return db_student
+
+
+@app.get('/students/', response_model=list[schemas.StudentResponse])
+def read_students(db: Session = Depends(get_db)):
+    students = db.query(models.Student).all()
+    return students
+    
+    
